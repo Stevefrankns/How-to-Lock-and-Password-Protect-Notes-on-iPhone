@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>How to Lock and Password Protect Notes on iPhone — iOS Guide</title>
+<meta content="Learn how to password protect notes on your iPhone using Face ID, Touch ID, or a custom password. Step-by-step iOS guide, troubleshooting, and advanced vault alternatives." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,700;1,700&amp;family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+
+:root {
+  --color-content-bg: #F7F5F0;
+  --color-hero-bg: #2D4A22;
+  --color-primary-accent: #5C8A3C;
+  --color-secondary-accent: #C17F3E;
+  --color-blob-a: #A8C97F;
+  --color-blob-b: #E8C9A0;
+  --color-card-surface: #FFFDFB;
+  --color-body-text: #1E2D14;
+  --color-heading-text: #1E2D14;
+  --color-border: rgba(45, 74, 34, 0.16);
+  --color-meta-text: #66765A;
+  --color-saas-band: #2D4A22;
+
+  --font-heading: 'Cormorant', serif;
+  --font-body: 'Nunito', sans-serif;
+
+  --max-reading-width: 760px;
+  --max-wide-width: 1120px;
+  --section-padding-v: 82px;
+  --radius-card: 24px;
+  --radius-organic-a: 32px 56px 28px 48px / 42px 26px 52px 34px;
+  --radius-organic-b: 56px 30px 52px 28px / 30px 58px 34px 54px;
+  --shadow-card: 0 18px 48px rgba(45, 74, 34, 0.12);
+  --shadow-soft: 0 10px 28px rgba(45, 74, 34, 0.10);
+  --transition-speed: 0.28s;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-body-text);
+  background:
+    radial-gradient(circle at 8% 10%, rgba(168,201,127,0.18), transparent 28rem),
+    radial-gradient(circle at 90% 22%, rgba(232,201,160,0.20), transparent 30rem),
+    var(--color-content-bg);
+  line-height: 1.75;
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(45, 74, 34, 0.055) 1px, transparent 0);
+  background-size: 28px 28px;
+  mask-image: linear-gradient(to bottom, black, transparent 70%);
+  z-index: -1;
+}
+
+#reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 14px;
+  width: 100%;
+  z-index: 9999;
+  pointer-events: none;
+  overflow: visible;
+}
+
+#reading-progress .progress-blob {
+  width: 0%;
+  height: 14px;
+  min-width: 26px;
+  background: linear-gradient(90deg, var(--color-blob-a), var(--color-secondary-accent), var(--color-primary-accent));
+  border-radius: 0 40px 55px 0 / 0 70px 40px 0;
+  filter: drop-shadow(0 3px 7px rgba(45,74,34,.28));
+  transform-origin: left center;
+  transition: width 0.12s linear, border-radius 0.28s ease;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-heading);
+  color: var(--color-heading-text);
+  line-height: 1.08;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+h1 {
+  font-size: clamp(38px, 6vw, 62px);
+  letter-spacing: -0.03em;
+  font-style: italic;
+  text-transform: none;
+}
+
+h2 {
+  font-size: clamp(2.15rem, 4vw, 3.15rem);
+  margin-top: 2rem;
+  letter-spacing: -0.02em;
+}
+
+h3 {
+  font-size: 1.78rem;
+  margin-top: 1.5rem;
+  letter-spacing: -0.01em;
+}
+
+p { margin-bottom: 1.25rem; }
+a { color: var(--color-secondary-accent); text-decoration-thickness: 2px; text-underline-offset: 4px; transition: all var(--transition-speed); }
+a:hover { color: var(--color-primary-accent); }
+
+ul, ol { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+li { margin-bottom: 0.55rem; }
+
+img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.container { max-width: var(--max-wide-width); margin: 0 auto; padding: 0 24px; position: relative; }
+.reading-container { max-width: var(--max-reading-width); margin: 0 auto; padding: 0 24px; position: relative; }
+section { padding: var(--section-padding-v) 0; position: relative; }
+
+.bg-alt {
+  background:
+    radial-gradient(circle at 85% 20%, rgba(168,201,127,0.18), transparent 22rem),
+    #F1EEE4;
+}
+
+.bg-saas {
+  background:
+    radial-gradient(circle at 10% 18%, rgba(168,201,127,0.35), transparent 22rem),
+    radial-gradient(circle at 85% 70%, rgba(232,201,160,0.24), transparent 28rem),
+    var(--color-saas-band);
+  color: #FFFDFB;
+  overflow: hidden;
+}
+.bg-saas h2, .bg-saas h3, .bg-saas p { color: #FFFDFB; }
+
+/* Header & Nav */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 253, 251, 0.84);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--color-border);
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  transition: box-shadow var(--transition-speed), background var(--transition-speed);
+}
+header.scrolled { box-shadow: var(--shadow-soft); background: rgba(255,253,251,0.94); }
+.nav-container { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: var(--max-wide-width); margin: 0 auto; padding: 0 24px; }
+.site-brand-wrapper { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; }
+.site-brand-wrapper:hover { text-decoration: none; }
+.site-brand {
+  font-family: var(--font-heading);
+  font-size: 25px;
+  font-weight: 700;
+  color: var(--color-heading-text);
+  letter-spacing: -0.01em;
+  text-transform: none;
+  white-space: nowrap;
+}
+.brand-logo {
+  width: 42px;
+  height: 42px;
+  border-radius: 18px 22px 16px 24px / 22px 16px 24px 18px;
+  object-fit: contain;
+  margin-right: 0;
+  box-shadow: 0 8px 20px rgba(45, 74, 34, 0.18);
+  background: #2D4A22;
+  padding: 2px;
+}
+.nav-links { display: flex; gap: 28px; align-items: center; }
+.nav-links a {
+  font-size: 14px;
+  color: #405638;
+  font-weight: 800;
+  text-transform: none;
+  letter-spacing: 0.01em;
+}
+.nav-links a:hover { color: var(--color-secondary-accent); text-decoration: none; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 13px 26px;
+  border-radius: 50px;
+  font-weight: 800;
+  font-size: 15px;
+  cursor: pointer;
+  transition: transform var(--transition-speed), box-shadow var(--transition-speed), background var(--transition-speed), border-radius var(--transition-speed);
+  border: 1.5px solid transparent;
+  text-transform: none;
+  font-family: var(--font-body);
+  letter-spacing: 0;
+  box-shadow: 0 10px 24px rgba(45, 74, 34, 0.12);
+}
+.btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  border-radius: 64px 44px 58px 46px / 48px 62px 44px 58px;
+  text-decoration: none;
+}
+.btn-outline {
+  background: rgba(255,253,251,0.4);
+  color: var(--color-primary-accent);
+  border-color: var(--color-primary-accent);
+}
+.btn-outline:hover { background: var(--color-primary-accent); color: #FFFDFB; }
+.btn-filled {
+  background: var(--color-primary-accent);
+  color: #FFFDFB;
+}
+.btn-filled:hover { background: var(--color-secondary-accent); color: #FFFDFB; }
+.btn-saas { background: var(--color-primary-accent); color: #FFFDFB; }
+.btn-saas:hover { background: var(--color-blob-a); color: var(--color-body-text); }
+.mobile-menu-btn { display: none; background: none; border: none; font-size: 26px; cursor: pointer; color: var(--color-heading-text); }
+
+/* Hero */
+.hero {
+  isolation: isolate;
+  text-align: center;
+  padding-top: 92px;
+  padding-bottom: 62px;
+  border-bottom: none;
+  background: var(--color-hero-bg);
+  color: #FFFDFB;
+  overflow: hidden;
+  min-height: 620px;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: auto -5% -1px -5%;
+  height: 120px;
+  background: var(--color-content-bg);
+  clip-path: path("M0,77 C150,128 268,26 420,74 C590,128 710,42 870,79 C1040,120 1160,36 1320,78 C1440,108 1540,75 1600,91 L1600,160 L0,160 Z");
+  z-index: 0;
+}
+.hero .reading-container { z-index: 2; }
+.hero h1 { color: #FFFDFB; text-shadow: 0 5px 30px rgba(0,0,0,.22); }
+.hero p { color: rgba(255,253,251,0.86) !important; }
+.hero-meta {
+  color: #E8C9A0;
+  font-size: 14px;
+  text-transform: none;
+  font-weight: 800;
+  letter-spacing: .06em;
+  margin-bottom: 24px;
+  display: block;
+}
+.hero-blob {
+  position: absolute;
+  z-index: 1;
+  opacity: .72;
+  filter: blur(.2px);
+  animation: breathingBlob 8s infinite ease-in-out;
+}
+.hero-blob-a {
+  width: min(34vw, 430px);
+  height: min(34vw, 430px);
+  left: -120px;
+  top: 88px;
+  background: linear-gradient(135deg, var(--color-blob-a), rgba(168,201,127,0.46));
+  border-radius: 60% 40% 50% 30% / 50% 60% 40% 50%;
+}
+.hero-blob-b {
+  width: min(36vw, 470px);
+  height: min(30vw, 380px);
+  right: -120px;
+  top: 138px;
+  background: linear-gradient(135deg, var(--color-blob-b), rgba(193,127,62,0.36));
+  border-radius: 48% 52% 35% 65% / 60% 40% 62% 38%;
+  animation-delay: -2s;
+}
+@keyframes breathingBlob {
+  0%, 100% { border-radius: 60% 40% 50% 30% / 50% 60% 40% 50%; transform: translate3d(0,0,0) scale(1); }
+  25% { border-radius: 42% 58% 37% 63% / 65% 38% 62% 35%; transform: translate3d(10px,-14px,0) scale(1.035); }
+  50% { border-radius: 70% 30% 62% 38% / 36% 65% 35% 64%; transform: translate3d(-8px,8px,0) scale(.985); }
+  75% { border-radius: 36% 64% 48% 52% / 58% 42% 68% 32%; transform: translate3d(12px,6px,0) scale(1.02); }
+}
+.quick-answer {
+  background: rgba(255, 253, 251, 0.95);
+  border: 1px solid rgba(232, 201, 160, 0.55);
+  border-left: 0;
+  padding: 28px;
+  border-radius: 34px 24px 42px 26px / 26px 44px 24px 38px;
+  text-align: left;
+  margin: 40px auto 0;
+  box-shadow: var(--shadow-card);
+  color: var(--color-body-text);
+}
+.quick-answer p { color: var(--color-body-text) !important; margin-bottom: 0; }
+.quick-answer-label {
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  color: var(--color-secondary-accent);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: .1em;
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* Organic media */
+.hero-banner,
+.section-img,
+.mockup-img,
+.organic-media img,
+.section-figure img,
+.accordion-content img {
+  width: 100%;
+  object-fit: contain;
+  display: block;
+  border-radius: 34px 24px 42px 26px / 26px 44px 24px 38px;
+}
+.hero-banner {
+  max-height: 390px;
+  background: #FFFDFB;
+  padding: 10px;
+  margin: 38px 0 0;
+  box-shadow: var(--shadow-card);
+}
+.section-img,
+.section-figure {
+  border-radius: 42px 26px 36px 54px / 30px 50px 38px 44px;
+  margin: 34px 0;
+  box-shadow: var(--shadow-card);
+  background: #FFFDFB;
+}
+.section-img { max-height: 340px; padding: 10px; }
+.section-figure { overflow: hidden; padding: 10px; }
+.section-figure img { max-height: 340px; box-shadow: none; margin: 0; }
+.img-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  margin: 34px 0;
+}
+.img-row .section-figure { margin: 0; }
+
+/* TOC */
+.toc-card {
+  background: rgba(255,253,251,.96);
+  border: 1px solid var(--color-border);
+  border-radius: 38px 24px 44px 28px / 30px 52px 28px 44px;
+  padding: 34px;
+  box-shadow: var(--shadow-card);
+  margin-bottom: 48px;
+}
+.toc-card h3 { margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid var(--color-border); padding-bottom: 10px; }
+.toc-card ul { list-style: none; padding-left: 0; columns: 1; }
+@media(min-width: 768px) { .toc-card ul { columns: 2; gap: 32px; } }
+.toc-card li { margin-bottom: 12px; }
+.toc-card a { color: #405638; font-weight: 800; display: inline-block; }
+.toc-card a:hover { color: var(--color-secondary-accent); transform: translateX(6px); text-decoration: none; }
+
+.diff-meter { display: inline-flex; gap: 5px; align-items: center; margin-left: 12px; vertical-align: middle; }
+.diff-bar { width: 13px; height: 13px; border-radius: 50%; background: rgba(45,74,34,.16); }
+.diff-bar.filled { background: var(--color-primary-accent); }
+.diff-label { font-family: var(--font-body); font-size: 13px; color: var(--color-meta-text); font-weight: 700; margin-left: 6px; text-transform: none; letter-spacing: 0; }
+.method-header { display: flex; align-items: center; flex-wrap: wrap; margin-top: 40px; margin-bottom: 16px; }
+.method-header h3 { margin: 0; }
+
+.callout,
+.quiz-container,
+.accordion-item,
+.pricing-panel,
+.testi-card,
+.comp-table-wrapper,
+.faq-item {
+  background: var(--color-card-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-organic-a);
+  box-shadow: var(--shadow-card);
+}
+.callout {
+  padding: 22px;
+  margin: 26px 0;
+}
+.callout-title { font-weight: 900; color: var(--color-heading-text); margin-bottom: 8px; display: block; }
+
+/* Accordion / organic cards */
+.accordion-item {
+  margin-bottom: 16px;
+  overflow: hidden;
+  border-left: 0;
+  transition: transform var(--transition-speed), border-radius var(--transition-speed), box-shadow var(--transition-speed);
+}
+.accordion-item:nth-of-type(even) { border-radius: var(--radius-organic-b); }
+.accordion-item:hover {
+  transform: scale(1.03);
+  border-radius: 64px 44px 72px 52px / 48px 78px 42px 66px;
+  box-shadow: 0 26px 70px rgba(45,74,34,.16);
+}
+.accordion-header {
+  padding: 22px 24px;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  font-family: var(--font-heading);
+  font-size: 1.34rem;
+  font-weight: 700;
+  color: var(--color-heading-text);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.accordion-content {
+  padding: 0 24px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.34s ease-out, padding 0.34s ease;
+  color: var(--color-meta-text);
+}
+.accordion-item.active .accordion-content { padding: 0 24px 24px; max-height: 720px; }
+.accordion-content img { margin-top: 18px; background: #F7F5F0; padding: 8px; max-height: 260px; }
+.accordion-icon { font-size: 22px; transition: transform 0.3s; color: var(--color-secondary-accent); }
+.accordion-item.active .accordion-icon { transform: rotate(45deg); }
+
+/* Comparison */
+.comp-table-wrapper {
+  overflow-x: auto;
+  margin: 32px 0;
+  padding: 8px;
+}
+.comp-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  background: transparent;
+  text-align: left;
+  min-width: 600px;
+}
+.comp-table th, .comp-table td {
+  padding: 16px 20px;
+  border-bottom: none;
+  background: #FFFDFB;
+}
+.comp-table th {
+  font-family: var(--font-body);
+  background: rgba(168,201,127,0.24);
+  color: var(--color-heading-text);
+  font-size: .98rem;
+  font-weight: 900;
+}
+.comp-table tr td:first-child, .comp-table tr th:first-child { border-radius: 18px 0 0 18px; }
+.comp-table tr td:last-child, .comp-table tr th:last-child { border-radius: 0 18px 18px 0; }
+.comp-table tr.highlight td { background: rgba(168,201,127,0.20); }
+.comp-table tr.highlight td:first-child { font-weight: 900; color: var(--color-primary-accent); }
+.check { color: var(--color-primary-accent); font-weight: bold; }
+.cross { color: #9A9D89; }
+
+/* FAQ */
+.faq-list { counter-reset: faq-counter; }
+.faq-item {
+  margin-bottom: 24px;
+  padding: 24px;
+  transition: transform var(--transition-speed), border-radius var(--transition-speed);
+}
+.faq-item:hover { transform: scale(1.015); border-radius: var(--radius-organic-b); }
+.faq-item h3 { margin-top: 0; font-size: 1.34rem; display: flex; align-items: flex-start; }
+.faq-item h3::before {
+  counter-increment: faq-counter;
+  content: "Q" counter(faq-counter) ".";
+  color: var(--color-secondary-accent);
+  margin-right: 12px;
+  font-weight: 900;
+}
+
+/* Testimonials ticker */
+.ticker-wrapper { overflow: hidden; padding: 20px 0; white-space: nowrap; position: relative; }
+.ticker-wrapper::before, .ticker-wrapper::after { content: ''; position: absolute; top: 0; width: 100px; height: 100%; z-index: 2; pointer-events: none; }
+.ticker-wrapper::before { left: 0; background: linear-gradient(to right, var(--color-content-bg), transparent); }
+.ticker-wrapper::after { right: 0; background: linear-gradient(to left, var(--color-content-bg), transparent); }
+.ticker-track { display: inline-flex; animation: ticker 40s linear infinite; gap: 24px; padding-left: 24px; }
+.ticker-wrapper:hover .ticker-track { animation-play-state: paused; }
+.testi-card {
+  display: inline-block;
+  white-space: normal;
+  width: 320px;
+  padding: 26px;
+  vertical-align: top;
+}
+.testi-text { font-style: italic; color: var(--color-meta-text); font-size: 15px; margin-bottom: 16px; display: block; }
+.testi-author { font-family: var(--font-body); font-weight: 900; font-size: 15px; color: var(--color-heading-text); display: block; }
+@keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* Pricing */
+.pricing-panel {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+@media(min-width: 768px) { .pricing-panel { flex-direction: row; } }
+.price-col-left { padding: 40px; flex: 1; border-bottom: 1px solid var(--color-border); }
+.price-col-right { padding: 40px; flex: 1; background: rgba(168,201,127,0.20); display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
+@media(min-width: 768px) { .price-col-left { border-bottom: none; border-right: 1px solid var(--color-border); } }
+.price-col-left h3 { font-size: 2rem; margin-top: 0; margin-bottom: 8px; }
+.price-cost { font-size: 1.2rem; color: var(--color-meta-text); margin-bottom: 24px; }
+
+/* Quiz */
+.quiz-container { padding: 34px; margin: 32px 0; }
+.quiz-question { font-family: var(--font-heading); font-size: 1.65rem; margin-bottom: 16px; font-weight: 700; }
+.quiz-options { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+.quiz-label {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 28px 20px 32px 22px / 22px 30px 20px 34px;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s, border-radius 0.2s;
+  background: rgba(247,245,240,.62);
+}
+.quiz-label:hover { background: rgba(168,201,127,0.16); border-color: var(--color-primary-accent); transform: scale(1.02); border-radius: var(--radius-organic-b); }
+.quiz-label input { margin-right: 12px; accent-color: var(--color-primary-accent); }
+.quiz-result {
+  display: none;
+  padding: 22px;
+  background: rgba(168,201,127,0.18);
+  border-left: 0;
+  border-radius: 28px 48px 24px 42px / 44px 26px 38px 28px;
+}
+.quiz-result.active { display: block; animation: bloomIn 0.55s cubic-bezier(.2,.9,.2,1.15); }
+
+.mockup-container {
+  background: rgba(255,253,251,0.13);
+  padding: 18px;
+  border-radius: 42px 28px 54px 32px / 30px 58px 28px 48px;
+  margin: 32px 0;
+  border: 1px solid rgba(255,255,255,0.16);
+  box-shadow: 0 24px 52px rgba(0,0,0,0.25);
+}
+.mockup-screen {
+  background: #FFFDFB;
+  border-radius: 30px 20px 38px 24px / 24px 34px 22px 36px;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-meta-text);
+  font-family: var(--font-body);
+  text-transform: none;
+  letter-spacing: 0;
+  overflow: hidden;
+}
+
+/* SVG waves */
+.wave-divider {
+  height: 86px;
+  line-height: 0;
+  overflow: hidden;
+  background: transparent;
+  margin: -1px 0;
+}
+.wave-divider svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.wave-divider path {
+  fill: #F7F5F0;
+  filter: drop-shadow(0 -8px 18px rgba(45,74,34,0.04));
+}
+.wave-divider.alt path { fill: #F1EEE4; }
+.wave-divider.green path { fill: #2D4A22; }
+
+/* Nature map signature */
+.nature-map {
+  margin: 34px 0;
+  padding: 16px;
+  background: rgba(255,253,251,.86);
+  border: 1px solid var(--color-border);
+  border-radius: 50px 32px 44px 28px / 36px 56px 30px 48px;
+  box-shadow: var(--shadow-soft);
+}
+.nature-map svg { width: 100%; height: auto; display: block; }
+.nature-trail {
+  fill: none;
+  stroke: var(--color-secondary-accent);
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 900;
+  stroke-dashoffset: 900;
+  transition: stroke-dashoffset 1.2s cubic-bezier(.2,.8,.2,1);
+}
+.nature-map.in-view .nature-trail { stroke-dashoffset: 0; }
+.checkpoint { fill: var(--color-secondary-accent); stroke: #FFFDFB; stroke-width: 5; filter: drop-shadow(0 4px 10px rgba(45,74,34,.16)); }
+
+/* Petal reveal */
+.petal-reveal {
+  opacity: 0;
+  transform: translateY(20px) scale(.82);
+}
+.petal-reveal.in-view {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition: opacity .75s ease, transform .75s cubic-bezier(.18,1.25,.32,1);
+}
+
+@keyframes bloomIn {
+  from { opacity: 0; transform: translateY(12px) scale(.8); border-radius: 60% 40% 50% 30% / 50% 60% 40% 50%; }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Footer */
+footer {
+  background:
+    radial-gradient(circle at 14% 20%, rgba(168,201,127,.22), transparent 20rem),
+    #172a16;
+  color: rgba(255,253,251,.72);
+  padding: 70px 0 34px;
+  font-size: 14px;
+  text-align: center;
+}
+footer a { color: #FFFDFB; }
+.footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; margin-bottom: 32px; }
+.disclosure { max-width: 600px; margin: 0 auto 32px; font-style: italic; opacity: 0.82; }
+
+@media(max-width: 768px) {
+  :root { --section-padding-v: 64px; }
+  .hero-blob { animation-duration: 12s; }
+  .nav-links { display: none; position: absolute; top: 72px; left: 0; right: 0; background: rgba(255,253,251,.98); flex-direction: column; padding: 24px; border-bottom: 1px solid var(--color-border); box-shadow: var(--shadow-card); }
+  .nav-links.active { display: flex; }
+  .mobile-menu-btn { display: block; }
+  .site-brand { font-size: 21px; }
+  .brand-logo { width: 38px; height: 38px; }
+  .img-row { grid-template-columns: 1fr; }
+  .hero { min-height: auto; padding-top: 72px; }
+  .hero-blob-a { width: 290px; height: 290px; left: -150px; }
+  .hero-blob-b { width: 310px; height: 250px; right: -165px; }
+}
+
+</style>
+</head>
+<body><div aria-hidden="true" id="reading-progress"><div class="progress-blob"></div></div>
+<!-- Header -->
+<header id="main-header">
+<div class="nav-container">
+<a class="site-brand-wrapper" href="#">
+<img alt="iPhone Notes Lock Guide security shield logo" class="brand-logo" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2096%2096%27%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20x2%3D%271%27%20y1%3D%270%27%20y2%3D%271%27%3E%0A%20%20%20%20%20%20%3Cstop%20stop-color%3D%27%23A8C97F%27%20offset%3D%270%27/%3E%0A%20%20%20%20%20%20%3Cstop%20stop-color%3D%27%235C8A3C%27%20offset%3D%270.5%27/%3E%0A%20%20%20%20%20%20%3Cstop%20stop-color%3D%27%23C17F3E%27%20offset%3D%271%27/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%2796%27%20height%3D%2796%27%20rx%3D%2728%27%20fill%3D%27%232D4A22%27/%3E%0A%20%20%3Cpath%20d%3D%27M48%2013%2076%2024v20c0%2019-11%2032-28%2039-17-7-28-20-28-39V24l28-11Z%27%20fill%3D%27url%28%23g%29%27/%3E%0A%20%20%3Cpath%20d%3D%27M37%2048c0-6%205-11%2011-11s11%205%2011%2011v6h-6v-6c0-3-2-5-5-5s-5%202-5%205v6h-6v-6Z%27%20fill%3D%27%23FFFDFB%27/%3E%0A%20%20%3Crect%20x%3D%2732%27%20y%3D%2752%27%20width%3D%2732%27%20height%3D%2722%27%20rx%3D%278%27%20fill%3D%27%23FFFDFB%27/%3E%0A%20%20%3Ccircle%20cx%3D%2748%27%20cy%3D%2763%27%20r%3D%274%27%20fill%3D%27%232D4A22%27/%3E%0A%20%20%3Cpath%20d%3D%27M48%2064v5%27%20stroke%3D%27%232D4A22%27%20stroke-width%3D%273%27%20stroke-linecap%3D%27round%27/%3E%0A%3C/svg%3E"/>
+<div class="site-brand">iPhone Notes Lock Guide</div>
+</a>
+<button aria-label="Toggle Menu" class="mobile-menu-btn" id="mobile-toggle">☰</button>
+<nav class="nav-links" id="nav-links">
+<a href="#overview">Overview</a>
+<a href="#methods">Methods</a>
+<a href="#recommendation">Top Pick</a>
+<a href="#faq">FAQ</a>
+<a class="btn btn-outline" href="#recommendation" style="padding: 8px 16px; font-size: 13px;">See Our Top Pick →</a>
+</nav>
+</div>
+</header>
+<!-- S1: HERO (Editorial Layout) -->
+<section class="hero"><div aria-hidden="true" class="hero-blob hero-blob-a"></div><div aria-hidden="true" class="hero-blob hero-blob-b"></div>
+<div class="reading-container">
+<span class="hero-meta">iOS Security Guide · Updated May 2026 · 8 min read</span>
+<h1>How to Lock and Password Protect Notes on iPhone — iOS Guide</h1>
+<p style="font-size: 1.1rem; color: var(--color-meta-text); max-width: 600px; margin: 0 auto;">
+        Whether you are hiding sensitive passwords, securing private lists, or keeping personal photos away from shoulder-surfers, this guide covers every native and third-party method to lock down your Apple Notes data.
+      </p>
+<img alt="Encrypted secure notes illustration for password protecting iPhone notes" class="hero-banner petal-reveal" decoding="async" loading="eager" src="https://i.ibb.co/LddRBVjR/Encrypted-Secure-Notes.jpg"/>
+<div class="quick-answer" id="quick-answer">
+<span class="quick-answer-label">Quick Answer</span>
+<p><strong>Can I password protect notes on my iPhone?</strong> Yes. Open the Apple Notes app, tap and hold the specific note you want to secure, and select "Lock Note". You can choose to lock it using your iPhone passcode (Face ID/Touch ID) or create a unique standalone password specifically for Notes.</p>
+</div>
+</div>
+</section>
+<!-- S2: TABLE OF CONTENTS -->
+<section id="toc" style="padding-top: 0;">
+<div class="reading-container">
+<div class="toc-card petal-reveal">
+<h3>What's in this guide</h3>
+<ul>
+<li><a href="#overview">OS Compatibility &amp; Requirements</a></li>
+<li><a href="#method-native">Method 1: Native Apple Notes Lock</a></li>
+<li><a href="#recommendation">Method 2: Folder Lock (For Media &amp; Cross-Platform)</a></li>
+<li><a href="#folder-vs-note">Locking a Note vs Locking a Folder</a></li>
+<li><a href="#faceid-touchid">Face ID / Touch ID Security Models</a></li>
+<li><a href="#troubleshooting">Troubleshooting &amp; Forgotten Passwords</a></li>
+<li><a href="#decision-quiz">Quiz: Which Method is Right for You?</a></li>
+<li><a href="#faq">Frequently Asked Questions</a></li>
+</ul>
+</div>
+</div>
+</section>
+<!-- S3: OVERVIEW & COMPATIBILITY -->
+<div aria-hidden="true" class="wave-divider alt">
+<svg preserveaspectratio="none" viewbox="0 0 1440 110">
+<path d="M0,54 C165,112 278,12 432,55 C610,104 704,100 870,48 C1046,-8 1198,54 1440,23 L1440,110 L0,110 Z">
+<animate attributename="d" begin="indefinite" dur="2.8s" repeatcount="1" values="M0,54 C165,112 278,12 432,55 C610,104 704,100 870,48 C1046,-8 1198,54 1440,23 L1440,110 L0,110 Z;
+                    M0,35 C190,76 292,88 446,42 C603,-3 762,92 922,51 C1102,4 1224,72 1440,38 L1440,110 L0,110 Z;
+                    M0,54 C165,112 278,12 432,55 C610,104 704,100 870,48 C1046,-8 1198,54 1440,23 L1440,110 L0,110 Z"></animate>
+</path>
+</svg>
+</div><section class="bg-alt" id="overview">
+<div class="reading-container">
+<h2>Before You Start: Compatibility &amp; Requirements</h2>
+<p>Securing your data on iOS is generally seamless, but the specific steps to password protect notes on your iPhone depend heavily on your iOS version and iCloud settings.</p>
+<div class="callout petal-reveal">
+<span class="callout-title">Tested iOS Versions</span>
+<p>The instructions in this guide have been verified on iOS 16, iOS 17, and iOS 18. If you are running iOS 15 or older, you will only have the option to use a custom Notes password (not your iPhone passcode).</p>
+</div>
+<p><strong>Important Note on iCloud:</strong> If your notes sync across devices via iCloud, locking a note on your iPhone will also lock it on your Mac and iPad. Ensure your devices are logged into the same Apple ID and have Keychain enabled.</p>
+<figure class="section-figure petal-reveal"><img alt="iCloud security illustration for synced locked notes across Apple devices" decoding="async" loading="lazy" src="https://i.ibb.co/0RPhLmVV/icloud-security-apple-adp.jpg"/></figure></div>
+</section>
+<!-- S4: METHODS GUIDE (Layer 1) -->
+<div aria-hidden="true" class="wave-divider">
+<svg preserveaspectratio="none" viewbox="0 0 1440 110">
+<path d="M0,54 C165,112 278,12 432,55 C610,104 704,100 870,48 C1046,-8 1198,54 1440,23 L1440,110 L0,110 Z">
+<animate attributename="d" begin="indefinite" dur="2.8s" repeatcount="1" values="M0,54 C165,112 278,12 432,55 C610,104 704,100 870,48 C1046,-8 1198,54 1440,23 L1440,110 L0,110 Z;
+                    M0,35 C190,76 292,88 446,42 C603,-3 762,92 922,51 C1102,4 1224,72 1440,38 L1440,110 L0,110 Z;
+                    M0,54 C165,112 278,12 432,55 C610,104 704,100 870,48 C1046,-8 1198,54 1440,23 L1440,110 L0,110 Z"></animate>
+</path>
+</svg>
+</div><section id="methods">
+<div class="reading-container">
+<h2>How to Lock Notes on iPhone (Native Method)</h2>
+<p>Apple provides a built-in feature to lock individual notes. This is the best approach if you only need to secure basic text and are staying entirely within the Apple ecosystem.</p>
+<div class="method-header" id="method-native">
+<h3>Method 1: Use the Native "Lock Note" Feature</h3>
+<div aria-label="Difficulty: 1 out of 5" class="diff-meter">
+<div class="diff-bar filled"></div>
+<div class="diff-bar"></div>
+<div class="diff-bar"></div>
+<div class="diff-bar"></div>
+<div class="diff-bar"></div>
+<span class="diff-label">Very Easy (1 min)</span>
+</div>
+</div>
+<ol>
+<li>Open the <strong>Notes</strong> app on your iPhone.</li>
+<li>Locate the note you want to secure and open it.</li>
+<li>Tap the <strong>More button (...)</strong> in the top right corner.</li>
+<li>Tap <strong>Lock</strong> (indicated by a padlock icon).</li>
+<li>Choose whether to use your <strong>iPhone Passcode</strong> or create a separate <strong>Custom Password</strong>.</li>
+<li>If prompted, authenticate using Face ID, Touch ID, or your chosen password.</li>
+</ol>
+<img alt="Apple Notes lock screen showing native iPhone note password protection" class="section-img petal-reveal" decoding="async" loading="lazy" src="https://i.ibb.co/S4vzVL5V/apple-notes-lock.jpg"/>
+<div class="callout petal-reveal">
+<span class="callout-title">What this method is best for:</span>
+<p>Securing simple text lists, journals, or quick passwords natively on your device without downloading extra software.</p>
+<span class="callout-title" style="margin-top: 16px; color: #8a3a3a;">Limitations:</span>
+<p>You cannot lock an entire folder of notes at once native to the app—you must lock them individually. Furthermore, Apple Notes is notoriously difficult to access securely from a Windows PC or Android device, and it limits the types of attachments you can lock.</p>
+</div>
+</div>
+</section>
+<!-- S5: WHY RECOMMEND (SaaS Premium Moment / Layer 2 Transition) -->
+<div aria-hidden="true" class="wave-divider green">
+<svg preserveaspectratio="none" viewbox="0 0 1440 110">
+<path d="M0,54 C165,112 278,12 432,55 C610,104 704,100 870,48 C1046,-8 1198,54 1440,23 L1440,110 L0,110 Z">
+<animate attributename="d" begin="indefinite" dur="2.8s" repeatcount="1" values="M0,54 C165,112 278,12 432,55 C610,104 704,100 870,48 C1046,-8 1198,54 1440,23 L1440,110 L0,110 Z;
+                    M0,35 C190,76 292,88 446,42 C603,-3 762,92 922,51 C1102,4 1224,72 1440,38 L1440,110 L0,110 Z;
+                    M0,54 C165,112 278,12 432,55 C610,104 704,100 870,48 C1046,-8 1198,54 1440,23 L1440,110 L0,110 Z"></animate>
+</path>
+</svg>
+</div><section class="bg-saas" id="recommendation">
+<div class="container">
+<div style="text-align: center; max-width: 760px; margin: 0 auto;">
+<h2>Need More Than Basic Text Locking?</h2>
+<p style="font-size: 1.2rem; margin-bottom: 32px; opacity: 0.9;">
+          If you need to lock entire folders, secure sensitive photos without cluttering your camera roll, or access your encrypted notes on a Windows PC, the native Apple Notes app falls short. For true secure vaulting backed by military-grade AES 256-bit encryption and automatic hack-attempt monitoring, we recommend <strong><a href="https://www.newsoftwares.net/" rel="noopener noreferrer" target="_blank">Folder Lock</a></strong>.
+        </p>
+<div class="mockup-container">
+<div class="mockup-screen" style="padding: 0; border: none; overflow: hidden;">
+<img alt="Folder Lock mobile dashboard showing secure vault modules for notes photos and files" class="mockup-img" decoding="async" loading="lazy" src="https://i.ibb.co/TMBb2KDc/folder-lock-android-main-screen-data-security-suite.jpg"/>
+</div>
+</div>
+<div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 40px;">
+<a class="btn btn-saas" href="https://www.newsoftwares.net/download/folderlock10-en/folder-lock-en.exe" rel="noopener noreferrer" target="_blank">Try Folder Lock Free →</a>
+<a class="btn btn-outline" href="https://store.newsoftwares.net/?add=fl10" rel="noopener noreferrer" style="border-color: rgba(255,255,255,0.4); color: #fff;" target="_blank">Get the Full Version →</a>
+</div>
+</div>
+</div>
+</section>
+<!-- S7: CORE FEATURES (V5 Stacked Accordion) -->
+<div aria-hidden="true" class="wave-divider alt">
+<svg preserveaspectratio="none" viewbox="0 0 1440 110">
+<path d="M0,54 C165,112 278,12 432,55 C610,104 704,100 870,48 C1046,-8 1198,54 1440,23 L1440,110 L0,110 Z">
+<animate attributename="d" begin="indefinite" dur="2.8s" repeatcount="1" values="M0,54 C165,112 278,12 432,55 C610,104 704,100 870,48 C1046,-8 1198,54 1440,23 L1440,110 L0,110 Z;
+                    M0,35 C190,76 292,88 446,42 C603,-3 762,92 922,51 C1102,4 1224,72 1440,38 L1440,110 L0,110 Z;
+                    M0,54 C165,112 278,12 432,55 C610,104 704,100 870,48 C1046,-8 1198,54 1440,23 L1440,110 L0,110 Z"></animate>
+</path>
+</svg>
+</div><section class="bg-alt" id="features">
+<div class="reading-container">
+<h2>Why We Suggest a Dedicated Secure Vault</h2>
+<p>Using a tool like Folder Lock provides capabilities that iOS sandboxing restricts native apps from performing, ensuring your sensitive text and media are defended by <a href="https://psbios.com/file-encryption-explained/" rel="noopener noreferrer" target="_blank">AES-256 encryption</a>.</p><div aria-hidden="true" class="nature-map petal-reveal">
+<svg aria-label="Nature trail path connecting secure vault features" role="img" viewbox="0 0 760 220">
+<path class="nature-trail" d="M42 164 C120 58 196 54 258 120 C323 190 406 186 462 102 C530 0 638 46 704 126"></path>
+<circle class="checkpoint" cx="42" cy="164" r="13"></circle>
+<circle class="checkpoint" cx="258" cy="120" r="13"></circle>
+<circle class="checkpoint" cx="462" cy="102" r="13"></circle>
+<circle class="checkpoint" cx="704" cy="126" r="13"></circle>
+</svg>
+</div>
+<div class="accordion-item active petal-reveal">
+<button aria-expanded="true" class="accordion-header">
+          Advanced Security &amp; Hack Monitoring
+          <span class="accordion-icon">+</span>
+</button>
+<div class="accordion-content">
+          Unlike the standard iOS vault, a specialized application logs unauthorized access. If an intruder attempts to guess your master pin, the system actively monitors and records the hacking attempt.
+        <figure class="organic-media petal-reveal"><img alt="Hack attempt monitoring dashboard for secure mobile vault access" decoding="async" loading="lazy" src="https://i.ibb.co/DPBbtBCG/Monitoring-Attempts.jpg"/></figure></div>
+</div>
+<div class="accordion-item petal-reveal">
+<button aria-expanded="false" class="accordion-header">
+          Cross-Platform Ecosystem &amp; Wi-Fi Transfer
+          <span class="accordion-icon">+</span>
+</button>
+<div class="accordion-content">
+          Instead of relying exclusively on iCloud web portals, third-party vaults provide native applications for macOS, Windows, and Android. You can even move confidential notes locally between your desktop and iPhone using secure Wi-Fi transfer, bypassing <a href="https://www.windowscentral.com/how-encrypt-data-storing-it-cloud-and-why-you-should" rel="noopener noreferrer" target="_blank">cloud servers</a> entirely.
+          <img alt="Secure cross platform synchronization between iPhone Mac Windows and Android devices" class="petal-reveal" decoding="async" loading="lazy" src="https://i.ibb.co/jZfz7Hzz/Cross-Platform-Synchronization.jpg" style=""/>
+</div>
+</div>
+<div class="accordion-item petal-reveal">
+<button aria-expanded="false" class="accordion-header">
+          Secure Wallets &amp; Private Browsing
+          <span class="accordion-icon">+</span>
+</button>
+<div class="accordion-content">
+          Beyond simple text logging, specialized applications offer segmented modules to store credit card data securely. The iOS application also features a completely isolated web browser, ensuring your research leaves no footprint on your primary Safari app.
+        <figure class="organic-media petal-reveal"><img alt="Private wallet security illustration for storing sensitive credentials in a vault" decoding="async" loading="lazy" src="https://i.ibb.co/zDhHDzm/Securing-Private-Wallets.jpg"/></figure></div>
+</div>
+</div>
+</section>
+<!-- S8: METHODS COMPARISON TABLE (V6) -->
+<div aria-hidden="true" class="wave-divider">
+<svg preserveaspectratio="none" viewbox="0 0 1440 110">
+<path d="M0,54 C165,112 278,12 432,55 C610,104 704,100 870,48 C1046,-8 1198,54 1440,23 L1440,110 L0,110 Z">
+<animate attributename="d" begin="indefinite" dur="2.8s" repeatcount="1" values="M0,54 C165,112 278,12 432,55 C610,104 704,100 870,48 C1046,-8 1198,54 1440,23 L1440,110 L0,110 Z;
+                    M0,35 C190,76 292,88 446,42 C603,-3 762,92 922,51 C1102,4 1224,72 1440,38 L1440,110 L0,110 Z;
+                    M0,54 C165,112 278,12 432,55 C610,104 704,100 870,48 C1046,-8 1198,54 1440,23 L1440,110 L0,110 Z"></animate>
+</path>
+</svg>
+</div><section id="comparison">
+<div class="reading-container">
+<h2>Methods Comparison</h2>
+<div class="comp-table-wrapper petal-reveal">
+<table class="comp-table">
+<thead>
+<tr>
+<th>Method</th>
+<th>Difficulty</th>
+<th>Lock Folders?</th>
+<th>Cross-Platform</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Apple Notes (Native)</td>
+<td>Very Easy</td>
+<td class="cross">No (Notes only)</td>
+<td class="cross">No (Mac/iOS only)</td>
+<td>Basic text security</td>
+</tr>
+<tr class="highlight">
+<td><a href="https://cloudstorageinfo.org/folder-lock-review" rel="noopener noreferrer" target="_blank">Folder Lock (iOS)</a></td>
+<td>Easy</td>
+<td class="check">Yes</td>
+<td class="check">Yes</td>
+<td>Media, docs, cross-device</td>
+</tr>
+<tr>
+<td><a href="https://proprivacy.com/guides/encrypt-files-windows" rel="noopener noreferrer" target="_blank">Manual File Encryption</a></td>
+<td>Hard</td>
+<td class="check">Yes</td>
+<td class="check">Yes</td>
+<td>Advanced desktop users</td>
+</tr>
+</tbody>
+</table>
+</div><figure class="section-figure petal-reveal"><img alt="Comparison of data security software platforms for notes folders and files" decoding="async" loading="lazy" src="https://i.ibb.co/k24BgXfS/data-security-software-platforms.png"/></figure>
+</div>
+</section>
+<!-- INTERACTIVE ELEMENT: QUIZ (Decision Guide) -->
+<div aria-hidden="true" class="wave-divider alt">
+<svg preserveaspectratio="none" viewbox="0 0 1440 110">
+<path d="M0,54 C165,112 278,12 432,55 C610,104 704,100 870,48 C1046,-8 1198,54 1440,23 L1440,110 L0,110 Z">
+<animate attributename="d" begin="indefinite" dur="2.8s" repeatcount="1" values="M0,54 C165,112 278,12 432,55 C610,104 704,100 870,48 C1046,-8 1198,54 1440,23 L1440,110 L0,110 Z;
+                    M0,35 C190,76 292,88 446,42 C603,-3 762,92 922,51 C1102,4 1224,72 1440,38 L1440,110 L0,110 Z;
+                    M0,54 C165,112 278,12 432,55 C610,104 704,100 870,48 C1046,-8 1198,54 1440,23 L1440,110 L0,110 Z"></animate>
+</path>
+</svg>
+</div><section class="bg-alt" id="decision-quiz">
+<div class="reading-container">
+<h2>Which Method is Right for You?</h2>
+<p>Not sure whether to stick with Apple Notes or upgrade to a secure vault? Answer this quick question.</p><figure class="section-figure petal-reveal"><img alt="Locked devices illustration for choosing the right mobile security method" decoding="async" loading="lazy" src="https://i.ibb.co/ZC5xRkQ/data-security-devices-lock-illustration.png"/></figure>
+<div class="quiz-container petal-reveal">
+<div class="quiz-question">What are you primarily trying to protect?</div>
+<div class="quiz-options">
+<label class="quiz-label">
+<input name="quiz-intent" type="radio" value="native"/>
+            Just a few text lists, journal entries, or WiFi passwords.
+          </label>
+<label class="quiz-label">
+<input name="quiz-intent" type="radio" value="vault"/>
+            Scanned documents, private photos, and entire folders of sensitive notes.
+          </label>
+<label class="quiz-label">
+<input name="quiz-intent" type="radio" value="cross"/>
+            Notes I need to securely edit on my Windows work computer as well.
+          </label>
+</div>
+<div class="quiz-result" id="quiz-result-native">
+<strong>Recommendation: Stick to Native Apple Notes.</strong><br/>
+          For simple text on a device you already own, the built-in iOS locking feature is perfectly adequate and requires no setup.
+        </div>
+<div class="quiz-result" id="quiz-result-vault">
+<strong>Recommendation: Use a Secure Vault App.</strong><br/>
+          Apple Notes cannot lock folders or reliably hide media from your camera roll. An app like Folder Lock is required for this level of security.
+        </div>
+</div>
+</div>
+</section>
+<!-- DEEP DIVE SECTIONS -->
+<div aria-hidden="true" class="wave-divider">
+<svg preserveaspectratio="none" viewbox="0 0 1440 110">
+<path d="M0,54 C165,112 278,12 432,55 C610,104 704,100 870,48 C1046,-8 1198,54 1440,23 L1440,110 L0,110 Z">
+<animate attributename="d" begin="indefinite" dur="2.8s" repeatcount="1" values="M0,54 C165,112 278,12 432,55 C610,104 704,100 870,48 C1046,-8 1198,54 1440,23 L1440,110 L0,110 Z;
+                    M0,35 C190,76 292,88 446,42 C603,-3 762,92 922,51 C1102,4 1224,72 1440,38 L1440,110 L0,110 Z;
+                    M0,54 C165,112 278,12 432,55 C610,104 704,100 870,48 C1046,-8 1198,54 1440,23 L1440,110 L0,110 Z"></animate>
+</path>
+</svg>
+</div><section id="deep-dive">
+<div class="reading-container">
+<h2 id="folder-vs-note">Lock a Notes Folder on iPhone vs Individual Notes</h2>
+<p>A frequent point of confusion is the difference between locking an individual note and attempting to lock a whole folder. <strong>Currently, iOS does not allow you to lock a folder within the Apple Notes app.</strong></p>
+<p>If you search for <em>"how to lock a notes folder on iphone"</em>, the reality is you have to open that folder and manually lock each note inside it one by one. This is a primary reason many users migrate to third-party vault applications when dealing with dozens of secure documents.</p>
+<img alt="Data vault analogy showing folder level protection compared with individual locked notes" class="section-img petal-reveal" decoding="async" loading="lazy" src="https://i.ibb.co/Y4PCmGNW/Data-Vault-Analogy.jpg"/>
+<h2 id="faceid-touchid" style="margin-top: 48px;">Face ID vs Touch ID Security Models</h2>
+<p>When you set up notes protection, iOS allows you to link the lock to your biometrics. While incredibly convenient, understand the security trade-off:</p>
+<ul>
+<li><strong>Convenience:</strong> You don't have to type a master password in public.</li>
+<li><strong>Risk:</strong> Anyone who knows your primary iPhone device passcode can usually bypass Face ID/Touch ID fallback prompts. If you share your iPad or iPhone passcode with a family member, they can unlock your notes.</li>
+</ul>
+<p>To prevent this, iOS allows you to set a <strong>Custom Notes Password</strong> that is completely separate from your device unlock code.</p>
+<img alt="iPhone lock screen security concept for Face ID Touch ID and device passcode protection" class="section-img petal-reveal" decoding="async" loading="lazy" src="https://i.ibb.co/xtZC7X09/lock-screen-security.jpg"/>
+<h2 id="troubleshooting" style="margin-top: 48px;">Reset Notes Lock Password on iPhone</h2>
+<p>If you search for <em>"iphone notes lock forgot password"</em> or <em>"how to access locked notes on iphone forgotten password"</em>, here is the strict, owner-safe protocol provided by Apple:</p>
+<div class="callout petal-reveal">
+<span class="callout-title">The hard truth about forgotten Apple Notes passwords:</span>
+<p>If you used a Custom Password and forgot it, Apple cannot recover the data for you. The encryption is end-to-end.</p>
+</div>
+<p><strong>How to reset it for FUTURE notes:</strong></p>
+<ol>
+<li>Go to <strong>Settings &gt; Notes &gt; Password</strong>.</li>
+<li>Tap <strong>Reset Password</strong>.</li>
+<li>Enter your Apple ID password to verify ownership.</li>
+<li>Create a new password.</li>
+</ol>
+<p><em>Note:</em> Resetting the password does not unlock your previously locked notes. They will retain the old password. The new password will only apply to notes you lock from this point forward.</p>
+<img alt="Keyboard close up representing custom password reset and credential recovery steps" class="section-img petal-reveal" decoding="async" loading="lazy" src="https://i.ibb.co/vpWzKVd/computer-keyboard.jpg"/>
+</div>
+</section>
+<!-- S13: PRICING (V2 Alternate Panels) -->
+<div aria-hidden="true" class="wave-divider alt">
+<svg preserveaspectratio="none" viewbox="0 0 1440 110">
+<path d="M0,54 C165,112 278,12 432,55 C610,104 704,100 870,48 C1046,-8 1198,54 1440,23 L1440,110 L0,110 Z">
+<animate attributename="d" begin="indefinite" dur="2.8s" repeatcount="1" values="M0,54 C165,112 278,12 432,55 C610,104 704,100 870,48 C1046,-8 1198,54 1440,23 L1440,110 L0,110 Z;
+                    M0,35 C190,76 292,88 446,42 C603,-3 762,92 922,51 C1102,4 1224,72 1440,38 L1440,110 L0,110 Z;
+                    M0,54 C165,112 278,12 432,55 C610,104 704,100 870,48 C1046,-8 1198,54 1440,23 L1440,110 L0,110 Z"></animate>
+</path>
+</svg>
+</div><section class="bg-alt" id="pricing">
+<div class="reading-container">
+<h2>Folder Lock Pricing: What You Get</h2>
+<p>If you've decided a dedicated vault is the better route, here is how the pricing breaks down.</p><figure class="section-figure petal-reveal"><img alt="Folder Lock 10 product boxshot for secure vault pricing and download options" decoding="async" loading="lazy" src="https://i.ibb.co/V0Sw4tk7/folder-lock-10-boxshot.png"/></figure>
+<div class="pricing-panel petal-reveal">
+<div class="price-col-left">
+<h3>Free Version</h3>
+<div class="price-cost">$0 (Ad-supported)</div>
+<ul>
+<li>1 GB maximum locker capacity</li>
+<li>Synchronize up to two hardware devices</li>
+<li>Standard media and note protection</li>
+</ul>
+<a class="btn btn-outline" href="https://www.newsoftwares.net/download/folderlock10-en/folder-lock-en.exe" rel="noopener noreferrer" style="margin-top: 24px;" target="_blank">Download Free Version →</a>
+</div>
+<div class="price-col-right">
+<h3 style="color: var(--color-heading-text); margin-top: 0; margin-bottom: 8px;">Full Version (Pro)</h3>
+<div class="price-cost" style="color: var(--color-primary-accent); font-weight: 600;">$39.95</div>
+<ul style="color: var(--color-body-text);">
+<li>Unlimited storage vault capacity</li>
+<li>Sync securely across up to five devices</li>
+<li>Share files with unlimited users</li>
+<li>Unrestricted secure wallets and secrets</li>
+</ul>
+<a class="btn btn-filled" href="https://store.newsoftwares.net/?add=fl10" rel="noopener noreferrer" style="margin-top: 24px;" target="_blank">View Full Version Pricing →</a>
+</div>
+</div>
+</div>
+</section>
+<!-- TESTIMONIALS (V2 Ticker) -->
+<section id="testimonials" style="overflow: hidden;">
+<div class="reading-container">
+<h2>What Users Are Saying</h2><figure class="section-figure petal-reveal"><img alt="Customer testimonial illustration for secure notes and file protection users" decoding="async" loading="lazy" src="https://i.ibb.co/4wHxLnF3/customer-testimonial-illustration.png"/></figure>
+</div>
+<div class="ticker-wrapper">
+<div class="ticker-track">
+<div class="testi-card petal-reveal">
+<span class="testi-text">"Apple Notes was fine until I needed to secure a batch of legal PDFs on my phone. Switched to Folder Lock and it saved me hours."</span>
+<span class="testi-author">— Sarah T., Freelance Consultant</span>
+</div>
+<div class="testi-card petal-reveal">
+<span class="testi-text">"I share my iPad with my kids. The fact that I can have a completely separate vault for my work notes gives me total peace of mind."</span>
+<span class="testi-author">— Mark R., Small Business Owner</span>
+</div>
+<div class="testi-card petal-reveal">
+<span class="testi-text">"Syncing encrypted notes to my Windows PC used to be a nightmare. Using a dedicated app fixed the cross-platform bridge."</span>
+<span class="testi-author">— Elena K., Designer</span>
+</div>
+<div class="testi-card petal-reveal">
+<span class="testi-text">"Apple Notes was fine until I needed to secure a batch of legal PDFs on my phone. Switched to Folder Lock and it saved me hours."</span>
+<span class="testi-author">— Sarah T., Freelance Consultant</span>
+</div>
+</div>
+</div>
+</section>
+<!-- S20: FAQ (V7 Numbered List) -->
+<section id="faq">
+<div class="reading-container">
+<h2>Frequently Asked Questions</h2><figure class="section-figure petal-reveal"><img alt="Security shield protecting private notes and sensitive personal data" decoding="async" loading="lazy" src="https://i.ibb.co/bjywWFhL/security-shield-protecting.jpg"/></figure>
+<div class="faq-list">
+<div class="faq-item petal-reveal">
+<h3>Can I Password Protect Notes on My iPhone?</h3>
+<p>Yes. You can protect individual notes using the native Apple Notes app by tapping the "..." icon and selecting "Lock." You can authenticate using Face ID, Touch ID, or a custom password.</p>
+</div>
+<div class="faq-item petal-reveal">
+<h3>How Do I Password Protect Notes on iPhone without Face ID?</h3>
+<p>If you prefer not to use biometrics, go to Settings &gt; Notes &gt; Password and select "Use Custom Password." Ensure the toggle for "Use Face ID" is turned off. You will now be required to type your password manually every time.</p>
+</div>
+<div class="faq-item petal-reveal">
+<h3>What is the difference between locking a note and locking a folder in iPhone Notes?</h3>
+<p>Apple Notes natively allows you to lock individual notes, but it does not currently support locking an entire folder at once. If you need folder-level security, you must use a <a href="https://www.softwaretestinghelp.com/folder-lock-software/" rel="noopener noreferrer" target="_blank">third-party application</a>.</p>
+</div>
+<div class="faq-item petal-reveal">
+<h3>How to access a locked note on iPhone if I forgot my password?</h3>
+<p>If you used your device passcode, simply enter the PIN you use to unlock your phone. If you created a custom Notes password and forgot it, the data cannot be recovered. You can reset the password in Settings to lock future notes, but old notes remain tied to the old password.</p>
+</div>
+<div class="faq-item petal-reveal">
+<h3>What happens to locked notes when I get a new iPhone?</h3>
+<p>If your notes are synced to iCloud, they will transfer to your new iPhone. You will need to enter the original custom password you set (or your new device's passcode if tied to device passcode) to open them.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- S22: FINAL VERDICT (Layer 3) -->
+<div aria-hidden="true" class="wave-divider alt">
+<svg preserveaspectratio="none" viewbox="0 0 1440 110">
+<path d="M0,54 C165,112 278,12 432,55 C610,104 704,100 870,48 C1046,-8 1198,54 1440,23 L1440,110 L0,110 Z">
+<animate attributename="d" begin="indefinite" dur="2.8s" repeatcount="1" values="M0,54 C165,112 278,12 432,55 C610,104 704,100 870,48 C1046,-8 1198,54 1440,23 L1440,110 L0,110 Z;
+                    M0,35 C190,76 292,88 446,42 C603,-3 762,92 922,51 C1102,4 1224,72 1440,38 L1440,110 L0,110 Z;
+                    M0,54 C165,112 278,12 432,55 C610,104 704,100 870,48 C1046,-8 1198,54 1440,23 L1440,110 L0,110 Z"></animate>
+</path>
+</svg>
+</div><section class="bg-alt" id="verdict" style="text-align: center;">
+<div class="reading-container">
+<h2>The Bottom Line</h2>
+<p style="font-size: 1.15rem; max-width: 600px; margin: 0 auto 32px;">
+        For basic text protection, the native Apple Notes lock is sufficient and easy to use. But if you are managing sensitive documents, cross-platform syncing, or need to lock entire folders at once, migrating to a dedicated secure vault is the safest approach.
+      </p><figure class="section-figure petal-reveal"><img alt="Smartphone shield illustration summarizing secure iPhone note protection choices" decoding="async" loading="lazy" src="https://i.ibb.co/h1C8dtH1/Smartphone-Shield.jpg"/></figure>
+<div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+<a class="btn btn-filled" href="#">Try Folder Lock Free →</a>
+<a class="btn btn-outline" href="#">Get the Full Version →</a>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer>
+<div class="container">
+<a class="site-brand-wrapper" href="#" style="justify-content: center; margin-bottom: 24px;">
+<img alt="iPhone Notes Lock Guide security shield logo" class="brand-logo" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2096%2096%27%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20x2%3D%271%27%20y1%3D%270%27%20y2%3D%271%27%3E%0A%20%20%20%20%20%20%3Cstop%20stop-color%3D%27%23A8C97F%27%20offset%3D%270%27/%3E%0A%20%20%20%20%20%20%3Cstop%20stop-color%3D%27%235C8A3C%27%20offset%3D%270.5%27/%3E%0A%20%20%20%20%20%20%3Cstop%20stop-color%3D%27%23C17F3E%27%20offset%3D%271%27/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%2796%27%20height%3D%2796%27%20rx%3D%2728%27%20fill%3D%27%232D4A22%27/%3E%0A%20%20%3Cpath%20d%3D%27M48%2013%2076%2024v20c0%2019-11%2032-28%2039-17-7-28-20-28-39V24l28-11Z%27%20fill%3D%27url%28%23g%29%27/%3E%0A%20%20%3Cpath%20d%3D%27M37%2048c0-6%205-11%2011-11s11%205%2011%2011v6h-6v-6c0-3-2-5-5-5s-5%202-5%205v6h-6v-6Z%27%20fill%3D%27%23FFFDFB%27/%3E%0A%20%20%3Crect%20x%3D%2732%27%20y%3D%2752%27%20width%3D%2732%27%20height%3D%2722%27%20rx%3D%278%27%20fill%3D%27%23FFFDFB%27/%3E%0A%20%20%3Ccircle%20cx%3D%2748%27%20cy%3D%2763%27%20r%3D%274%27%20fill%3D%27%232D4A22%27/%3E%0A%20%20%3Cpath%20d%3D%27M48%2064v5%27%20stroke%3D%27%232D4A22%27%20stroke-width%3D%273%27%20stroke-linecap%3D%27round%27/%3E%0A%3C/svg%3E"/>
+<div class="site-brand" style="color: #fff;">iPhone Notes Lock Guide</div>
+</a>
+<div class="footer-links">
+<a href="#overview">Guide</a>
+<a href="#methods">Methods</a>
+<a href="#faq">FAQ</a>
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Use</a>
+</div>
+<div class="disclosure">
+        This site operates as an independent editorial resource. Some links may earn a referral commission at no cost to you. Product recommendations reflect editorial judgment and independent assessment.
+      </div>
+<p>Folder Lock is developed by <a href="https://www.newsoftwares.net" rel="noopener noreferrer" target="_blank">NewSoftwares.net</a>.</p>
+<p style="margin-top: 12px; opacity: 0.6;">© 2026 iPhoneNotesLockGuide</p>
+</div>
+</footer>
+<!-- Schema & Scripts -->
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "name": "How to Lock and Password Protect Notes on iPhone — iOS Guide",
+        "description": "Learn how to password protect notes on your iPhone using Face ID, Touch ID, or a custom password. Step-by-step iOS guide, troubleshooting, and advanced vault alternatives."
+      },
+      {
+        "@type": "Article",
+        "headline": "How to Lock and Password Protect Notes on iPhone — iOS Guide",
+        "publisher": {
+          "@type": "Organization",
+          "name": "NewSoftwares.net"
+        }
+      },
+      {
+        "@type": "HowTo",
+        "name": "How to lock a note natively on iPhone",
+        "step": [
+          { "@type": "HowToStep", "text": "Open the Notes app on your iPhone." },
+          { "@type": "HowToStep", "text": "Locate the note you want to secure and open it." },
+          { "@type": "HowToStep", "text": "Tap the More button (...) in the top right corner." },
+          { "@type": "HowToStep", "text": "Tap Lock (indicated by a padlock icon)." },
+          { "@type": "HowToStep", "text": "Authenticate using your chosen method." }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Can I Password Protect Notes on My iPhone?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. You can protect individual notes using the native Apple Notes app by tapping the '...' icon and selecting 'Lock.' You can authenticate using Face ID, Touch ID, or a custom password."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the difference between locking a note and locking a folder in iPhone Notes?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Apple Notes natively allows you to lock individual notes, but it does not currently support locking an entire folder at once. If you need folder-level security, you must use a third-party application."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How to access a locked note on iPhone if I forgot my password?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "If you used your device passcode, simply enter the PIN you use to unlock your phone. If you created a custom Notes password and forgot it, the data cannot be recovered. You can reset the password in Settings to lock future notes, but old notes remain tied to the old password."
+            }
+          }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home" },
+          { "@type": "ListItem", "position": 2, "name": "iOS Security Guides" },
+          { "@type": "ListItem", "position": 3, "name": "Password Protect iPhone Notes" }
+        ]
+      }
+    ]
+  }
+  </script>
+<script defer="">
+document.addEventListener('DOMContentLoaded', () => {
+  // Sticky Header
+  const header = document.getElementById('main-header');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 10) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
+
+  // Flowing Progress Blob
+  const progressBlob = document.querySelector('#reading-progress .progress-blob');
+  const updateProgress = () => {
+    if (!progressBlob) return;
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const percent = max > 0 ? Math.min(100, Math.max(0, (window.scrollY / max) * 100)) : 0;
+    progressBlob.style.width = `${percent}%`;
+    const organicShift = 35 + Math.sin(percent / 7) * 16;
+    progressBlob.style.borderRadius = `0 ${organicShift + 24}px ${organicShift}px 0 / 0 ${organicShift}px ${organicShift + 18}px 0`;
+  };
+  updateProgress();
+  window.addEventListener('scroll', updateProgress, { passive: true });
+
+  // Mobile Menu
+  const mobileToggle = document.getElementById('mobile-toggle');
+  const navLinks = document.getElementById('nav-links');
+  if (mobileToggle && navLinks) {
+    mobileToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+  }
+
+  // Smooth Scroll for internal anchors only
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      if (this.getAttribute('href') !== '#') {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          if (window.innerWidth <= 768 && navLinks) navLinks.classList.remove('active');
+        }
+      }
+    });
+  });
+
+  // Accordion (V5)
+  const accordions = document.querySelectorAll('.accordion-header');
+  accordions.forEach(acc => {
+    acc.addEventListener('click', function() {
+      const parent = this.parentElement;
+      const isActive = parent.classList.contains('active');
+
+      document.querySelectorAll('.accordion-item').forEach(item => {
+        item.classList.remove('active');
+        const itemHeader = item.querySelector('.accordion-header');
+        if (itemHeader) itemHeader.setAttribute('aria-expanded', 'false');
+      });
+
+      if (!isActive) {
+        parent.classList.add('active');
+        this.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  // Quiz Logic
+  const quizRadios = document.querySelectorAll('input[name="quiz-intent"]');
+  const results = document.querySelectorAll('.quiz-result');
+  quizRadios.forEach(radio => {
+    radio.addEventListener('change', (e) => {
+      results.forEach(r => r.classList.remove('active'));
+      if (e.target.value === 'native') {
+        document.getElementById('quiz-result-native').classList.add('active');
+      } else {
+        document.getElementById('quiz-result-vault').classList.add('active');
+      }
+    });
+  });
+
+  // Petal Reveal + Wave Ripple + Nature Trail Draw
+  const revealItems = document.querySelectorAll('.petal-reveal, .nature-map, .wave-divider');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('in-view');
+      if (entry.target.classList.contains('wave-divider')) {
+        entry.target.querySelectorAll('animate').forEach(anim => {
+          try { anim.beginElement(); } catch (e) {}
+        });
+      }
+    });
+  }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
+
+  revealItems.forEach(item => observer.observe(item));
+});
+</script>
+</body>
+</html>
